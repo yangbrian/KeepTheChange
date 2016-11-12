@@ -6,5 +6,9 @@ handlers:
 - url: /.*
   script: ktc.app
 
+libraries:
+- name: lxml
+  version: "latest"
+
 skip_files:
 - ^env$ #virtual env
