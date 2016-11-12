@@ -15,10 +15,25 @@ amazon = AmazonAPI(
     amazonkeys.AMAZON_ASSOC_TAG
 )
 
+from firebase import firebase
+firebase = firebase.FirebaseApplication('https://keep-the-change.firebaseio.com', None)
+
 # homepage
 @app.route("/")
 def index():
     return render_template("index.html")
+
+# get transactions (single user for now)
+@app.route("/transactions/<user_id>")
+def get_transactions(user_id):
+
+    # TODO - user specific data
+
+    result = firebase.get('/recent_transactions', None)
+    transactions = {
+        'recent_transactions': result
+    }
+    return jsonify(**transactions)
 
 ## Look up Amazon product info by ASIN
 @app.route('/amazon/<prod_id>')
@@ -52,7 +67,7 @@ def amazon_search(prod_id) :
     result = {
         'asin': product.asin,
         'name': product.title,
-        'price': product.price_and_currency[0],
+        'price': '%.2f'%(product.price_and_currency[0]),
         'currency': product.price_and_currency[1],
         'cheaper_available': cheaper_found
     }
@@ -61,7 +76,7 @@ def amazon_search(prod_id) :
         result['alternative'] = {
             'asin': lowest_price_item.asin,
             'name': lowest_price_item.title,
-            'price': lowest_price_item.price_and_currency[0],
+            'price': '%.2f'%(lowest_price_item.price_and_currency[0]),
             'currency': lowest_price_item.price_and_currency[1],
         }
     return jsonify(**result)
