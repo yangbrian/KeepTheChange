@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>JSON Maker</title>
+    <style>
+
+        body{
+            background-color:#EEEEEE;
+        }
+    	.divClass{
+    		background-color:#407F7F;
+    		height:500px;
+            width: 65%;
+            margin: 0 auto; 
+            margin-bottom: 10px;
+            padding-top: 1%;
+            padding-left: 1%;
+            overflow:auto;
+            border-radius: 25px;
+
+    	}
+    	.inputClass{
+            width:20%;
+            margin-right:50px;
+            margin-bottom:1.5%;
+    	}
+        .labels{
+            margin-right: 5px;
+            color:white;
+        }
+    	#main{
+            width:100%;
+    		
+    	}
+        #header{
+            margin-left:34%;
+        }
+        #numberInput{
+            width:10%;
+        }
+
+        #circleBase {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        background: yellow;
+        border: 3px solid red;
+        position: fixed;
+        bottom: 5%;
+        right: 5%;
+    }
+        #circle2{
+            border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        background: red;
+        border: 3px solid red;
+        position: fixed;
+        bottom: 5%;
+        left: 5%;
+        }
+        #addButton{
+         margin-top:17%;
+         margin-left:17%;
+         height:65%;
+         width:65%;
+        }
+
+        .picDiv{
+            float:left;
+            //background-color: red;
+            width:19%;
+            height:83%;
+        }
+        .infoDiv{
+            float:right;
+            //background-color: blue;
+            width:81%;
+            height:50%;
+        }
+
+        .lineBreaker{
+        border: 0;
+        height: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        margin-top: 0%;
+        margin-bottom:1%;
+        }
+
+        .nameLabel{
+        margin: 0px;
+        padding: 0px;
+        }
+        .infoList{
+            list-style-type: none;
+            margin:0;
+            padding:0;
+            overflow: hidden;
+            font:normal 17px/18px Helvetica, arial, sans-serif;
+        }
+        .infoList li{
+            float:left;
+            display: block;
+            border-left: rgba(255,255,255,.3) 1px solid;
+            padding: 4px 16px;
+            padding-top: 0;
+            color:white;
+        }
+        .infoList li:first-child {
+            border:0px;
+            padding-left:0;
+        }
+        .metaDataList{
+            list-style-type: none;
+            margin:0;
+            padding:0;
+            overflow: hidden;
+            color:white;
+            font:normal 13px/17px Helvetica, arial, sans-serif;
+        }
+        .metaDataList li span{
+            width:90px;
+            display: block;
+            float: left;
+            color:#aeaeae;
+        }
+        h3{
+            color:white;
+        }
+        h1{
+            color:white;
+            font: bold 30px/30px Helvetica, Arial, sans-serif;
+        }
+        
+
+       table {
+    border-collapse: separate;
+    border-spacing: 10px 10px;
+    }
+
+
+
+    </style>
+
+  </head>
+  <body>
+  
+
+  <div id="main">
+      <h1 id="header">Custom Roster Generator</h1>
+      <div id="circleBase" onclick="addNew"><img src="Plus.png" alt="New Player" id="addButton"></div>
+      <div id="circle2" onclick="createJSONFile"></div>
+  </div>
+  <script src="objectScript.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

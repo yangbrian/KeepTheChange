@@ -6,18 +6,25 @@
  -->
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
+    <title>Keep The Change</title>
+    <link rel="stylesheet" href="ihover.css">
     <style>
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
+        height:400px;
+        width:300px;
       }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
+      #power_button{
+        position:fixed;
+        left: 17%;
+        top: 30%;
+        width: 200px;
+        height: 200px;
+        background: red;
+        border-radius: 50%;
+}
+
       }
     </style>
 
@@ -30,9 +37,10 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <div id="status"></div>
-    <p>"Teddy sucks"</p>
-    <img id="image-result" hidden>
+
+        <div class="ih-item circle colored effect1"><
+        <div class="spinner"></div>
+        </div>
   </body>
 </html>
 
