@@ -33,44 +33,48 @@ def get_user(user_id):
     }
     return jsonify(**user), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
-# GET - get amount of one category
-@app.route("/user/<user_id>/<category>", methods=['GET'])
-def get_user_category(user_id, category):
+# GET - get amount of one property
+@app.route("/user/<user_id>/<property>", methods=['GET'])
+def get_user_property(user_id, property):
 
-    result = firebase.get('/' + user_id + '/' + category, None)
+    result = firebase.get('/' + user_id + '/' + property, None)
     user = {
-        category: result
+        property: result
     }
     return jsonify(**user), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
-# POST - accept one new transaction for that user
-@app.route("/user/<user_id>", methods=['POST'])
-def put_transaction(user_id):
-
+# POST - update budget
+# Input - Raw JSON in request body
+@app.route("/user/<user_id>/total_budget", methods=['POST'])
+def update_user_budget(user_id):
     result = firebase.put(
                 '/' + user_id + '/',
-                request.form['category'], # key
-                int(request.form[category]) # value
+                'total_budget', # key
+                request.get_json(force=True) # value
             )
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 
-# POST - accept one new transaction for that user
-# Same as put_transaction but with category in URL
-@app.route("/user/<user_id>/<category>", methods=['POST'])
-def put_transaction_category(user_id, category):
+# POST - add new transaction
+# Input - Encoded form data (4 fields - company, category, cost, date)
+# Each transaction will then be randomly assigned an ID
+@app.route("/user/<user_id>/transactions", methods=['POST'])
+def put_user_transaction(user_id):
 
-    result = firebase.put(
-                '/' + user_id + '/',
-                category, # key
-                int(request.form[category]) # value
-            )
+    data = {
+        'company': request.form['company'],
+        'category': request.form['category'],
+        'cost': request.form['cost'],
+        'date': request.form['date']
+    }
+
+    result = firebase.post('/' + user_id + '/transactions', data)
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 # DELETE - delete transaction
-@app.route("/user/<user_id>/<category>", methods=['DELETE'])
-def delete_transation(user_id, category):
+@app.route("/user/<user_id>/transactions/<transaction_id>", methods=['DELETE'])
+def delete_transation(user_id, transaction_id):
 
-    firebase.delete('/' + user_id + '/', category)
+    firebase.delete('/' + user_id + '/transactions/', transaction_id)
 
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 

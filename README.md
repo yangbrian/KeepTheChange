@@ -23,15 +23,15 @@ python ktc.py
 ## RESTful operations
 Until we implement authentication, the user ID is not taken into account. Just use whatever for now.
 
-***GET /transactions/1*** - Get all category amounts of user 1
+***GET /user/1*** - Get all information of user 1
 
-***GET /transactions/1/food*** - Get the amount for the food category of user 1
+***GET /user/1/transactions*** - Get the list of transactions of user 1
 
-***POST /transactions/1*** - Insert or update a new category (post form data - 'amount' and 'category')
+***POST /user/1/total_budget*** - Update user 1's budget. Expects raw JSON as request body.
 
-***POST /transactions/1/food*** - Insert or update the food category with an amount (post form data - 'amount')
+***POST /user/1/transactions*** - Insert a transaction for user 1 (encoded form data: company, cost, date, and category)
 
-***DELETE /transactions/1/food*** - Delete food category from user 1
+***DELETE /user/1/transactions/9876554*** - Delete transaction 9876554 from user 1
 
 The expected success response for all queries is a JSON document with a 200 OK status code.
 
