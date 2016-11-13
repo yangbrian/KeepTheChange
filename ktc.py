@@ -15,10 +15,32 @@ amazon = AmazonAPI(
     amazonkeys.AMAZON_ASSOC_TAG
 )
 
+from firebase import firebase
+firebase = firebase.FirebaseApplication('https://keep-the-change.firebaseio.com', None)
+
 # homepage
 @app.route("/")
 def index():
     return render_template("index.html")
+
+# GET - return json of all transactions of that user
+# POST - accept json of one new transaction for that user
+@app.route("/transactions/<user_id>", methods=['GET', 'POST'])
+def get_transactions(user_id):
+
+    if request.method == 'POST':
+        result = firebase.put(
+                    '/recent_transactions/',
+                    request.form['category'], # key
+                    int(request.form['amount']) # value
+                )
+        return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
+    else:
+        result = firebase.get('/recent_transactions', None)
+        transactions = {
+            'recent_transactions': result
+        }
+        return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 ## Look up Amazon product info by ASIN
 @app.route('/amazon/<prod_id>')
@@ -52,7 +74,7 @@ def amazon_search(prod_id) :
     result = {
         'asin': product.asin,
         'name': product.title,
-        'price': product.price_and_currency[0],
+        'price': '%.2f'%(product.price_and_currency[0]),
         'currency': product.price_and_currency[1],
         'cheaper_available': cheaper_found
     }
@@ -61,10 +83,10 @@ def amazon_search(prod_id) :
         result['alternative'] = {
             'asin': lowest_price_item.asin,
             'name': lowest_price_item.title,
-            'price': lowest_price_item.price_and_currency[0],
+            'price': '%.2f'%(lowest_price_item.price_and_currency[0]),
             'currency': lowest_price_item.price_and_currency[1],
         }
-    return jsonify(**result)
+    return jsonify(**result), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 @app.errorhandler(500)
 def server_error(e):
