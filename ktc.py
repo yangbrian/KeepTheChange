@@ -23,17 +23,24 @@ firebase = firebase.FirebaseApplication('https://keep-the-change.firebaseio.com'
 def index():
     return render_template("index.html")
 
-# get transactions (single user for now)
-@app.route("/transactions/<user_id>")
+# GET - return json of all transactions of that user
+# POST - accept json of one new transaction for that user
+@app.route("/transactions/<user_id>", methods=['GET', 'POST'])
 def get_transactions(user_id):
 
-    # TODO - user specific data
-
-    result = firebase.get('/recent_transactions', None)
-    transactions = {
-        'recent_transactions': result
-    }
-    return jsonify(**transactions)
+    if request.method == 'POST':
+        result = firebase.put(
+                    '/recent_transactions/',
+                    request.form['category'], # key
+                    int(request.form['amount']) # value
+                )
+        return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
+    else:
+        result = firebase.get('/recent_transactions', None)
+        transactions = {
+            'recent_transactions': result
+        }
+        return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 ## Look up Amazon product info by ASIN
 @app.route('/amazon/<prod_id>')
@@ -79,7 +86,7 @@ def amazon_search(prod_id) :
             'price': '%.2f'%(lowest_price_item.price_and_currency[0]),
             'currency': lowest_price_item.price_and_currency[1],
         }
-    return jsonify(**result)
+    return jsonify(**result), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 @app.errorhandler(500)
 def server_error(e):
