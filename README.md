@@ -29,7 +29,40 @@ Until we implement authentication, the user ID is not taken into account. Just u
 
 ***POST /user/1/total_budget*** - Update user 1's budget. Expects raw JSON as request body.
 
+Sample request body:
+
+```
+    [
+        {
+            "category": "Food",
+            "percentage": 30.0
+        },
+        {
+            "category": "Electronics",
+            "percentage": 10.0
+        },
+        {
+            "category": "Textbooks",
+            "percentage": 25.0
+        },
+        {
+            "category": "Clothes",
+            "percentage": 25.0
+        },
+        {
+            "category": "Misc",
+            "percentage": 20.0
+        }
+    ]
+```
+
 ***POST /user/1/transactions*** - Insert a transaction for user 1 (encoded form data: company, cost, date, and category)
+
+Sample request body:
+
+```
+category=food&cost=6&company=Chick+fil-A&date=2016-11-12
+```
 
 ***DELETE /user/1/transactions/9876554*** - Delete transaction 9876554 from user 1
 
