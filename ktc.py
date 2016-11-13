@@ -23,28 +23,28 @@ firebase = firebase.FirebaseApplication('https://keep-the-change.firebaseio.com'
 def index():
     return render_template("index.html")
 
-# GET - return json of all transactions of that user
-@app.route("/transactions/<user_id>", methods=['GET'])
-def get_transactions(user_id):
+# GET - return json of all user of that user
+@app.route("/user/<user_id>", methods=['GET'])
+def get_user(user_id):
 
     result = firebase.get('/' + user_id, None)
-    transactions = {
+    user = {
         'user_data': result
     }
-    return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
+    return jsonify(**user), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 # GET - get amount of one category
-@app.route("/transactions/<user_id>/<category>", methods=['GET'])
-def get_transactions_category(user_id, category):
+@app.route("/user/<user_id>/<category>", methods=['GET'])
+def get_user_category(user_id, category):
 
     result = firebase.get('/' + user_id + '/' + category, None)
-    transactions = {
+    user = {
         category: result
     }
-    return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
+    return jsonify(**user), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 # POST - accept one new transaction for that user
-@app.route("/transactions/<user_id>", methods=['POST'])
+@app.route("/user/<user_id>", methods=['POST'])
 def put_transaction(user_id):
 
     result = firebase.put(
@@ -56,7 +56,7 @@ def put_transaction(user_id):
 
 # POST - accept one new transaction for that user
 # Same as put_transaction but with category in URL
-@app.route("/transactions/<user_id>/<category>", methods=['POST'])
+@app.route("/user/<user_id>/<category>", methods=['POST'])
 def put_transaction_category(user_id, category):
 
     result = firebase.put(
@@ -67,7 +67,7 @@ def put_transaction_category(user_id, category):
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 # DELETE - delete transaction
-@app.route("/transactions/<user_id>/<category>", methods=['DELETE'])
+@app.route("/user/<user_id>/<category>", methods=['DELETE'])
 def delete_transation(user_id, category):
 
     firebase.delete('/' + user_id + '/', category)
