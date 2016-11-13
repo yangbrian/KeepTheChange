@@ -1,5 +1,24 @@
 # Keep The Change
-YHack 2016 Project - Help college students budget their money and watch their spending
+[YHack 2016](http://yhack.org) Project
+
+College students tend to spend too much money on food, clothing, and textbooks. (Insert cool description here)
+
+## Requirements
+* [Python 3.5.2](https://www.python.org)
+* [Virtualenv](https://virtualenv.pypa.io/en/stable/)
+* [Google Chrome](https://www.google.com/chrome)
+
+## Getting Started
+Keep The Change is a Python [Flask](http://flask.pocoo.org) app and a Chrome extension.
+
+Start by setting the constants in ```amazonkeys.py``` to match your [Amazon Associates and Advertising API](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_GettingStarted.html) accounts.
+
+To run the Flask app, [create a virtualenv](https://virtualenv.pypa.io/en/stable/userguide/#usage), then run the following:
+
+```
+pip install -r requirements.txt
+python ktc.py
+```
 
 ## RESTful operations
 Until we implement authentication, the user ID is not taken into account. Just use whatever for now.
@@ -19,4 +38,7 @@ The expected success response for all queries is a JSON document with a 200 OK s
 ## Amazon
 The other component of this app is finding cheaper alternatives to products users purchase on Amazon.
 
-***GET /amazon/B0016J8AOC*** - Get name, price, and cheaper alternative to ASIN [B01M3NDY8X](https://www.amazon.com/gp/product/B01M3NDY8X).
+***GET /amazon/B000OOYECC*** - Get name, price, and cheaper alternative to ASIN [B000OOYECC](https://www.amazon.com/gp/product/B000OOYECC).
+
+## Try it out
+Keep The Change is available at [https://keepthechange.herokuapp.com/](https://keepthechange.herokuapp.com/).

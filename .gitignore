@@ -2,3 +2,4 @@ __pycache__
 env
 lib
 amazonkeys.py
+.DS_Store
