@@ -29,7 +29,7 @@ def get_transactions(user_id):
 
     result = firebase.get('/' + user_id, None)
     transactions = {
-        user_id: result
+        'user_data': result
     }
     return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
