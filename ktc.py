@@ -27,9 +27,9 @@ def index():
 @app.route("/transactions/<user_id>", methods=['GET'])
 def get_transactions(user_id):
 
-    result = firebase.get('/recent_transactions', None)
+    result = firebase.get('/' + user_id, None)
     transactions = {
-        'recent_transactions': result
+        user_id: result
     }
     return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
@@ -37,9 +37,9 @@ def get_transactions(user_id):
 @app.route("/transactions/<user_id>/<category>", methods=['GET'])
 def get_transactions_category(user_id, category):
 
-    result = firebase.get('/recent_transactions/' + category, None)
+    result = firebase.get('/' + user_id + '/' + category, None)
     transactions = {
-        'amount': result
+        category: result
     }
     return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
@@ -48,9 +48,9 @@ def get_transactions_category(user_id, category):
 def put_transaction(user_id):
 
     result = firebase.put(
-                '/recent_transactions/',
+                '/' + user_id + '/',
                 request.form['category'], # key
-                int(request.form['amount']) # value
+                int(request.form[category]) # value
             )
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 
@@ -60,9 +60,9 @@ def put_transaction(user_id):
 def put_transaction_category(user_id, category):
 
     result = firebase.put(
-                '/recent_transactions/',
+                '/' + user_id + '/',
                 category, # key
-                int(request.form['amount']) # value
+                int(request.form[category]) # value
             )
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 
@@ -70,7 +70,7 @@ def put_transaction_category(user_id, category):
 @app.route("/transactions/<user_id>/<category>", methods=['DELETE'])
 def delete_transation(user_id, category):
 
-    firebase.delete('/recent_transactions/', category)
+    firebase.delete('/' + user_id + '/', category)
 
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 

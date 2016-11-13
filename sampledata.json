@@ -1,0 +1,52 @@
+{
+    "1": {
+        "total_budget": [{
+            "category": "Food",
+            "percentage": 20.0
+        }, {
+            "category": "Electronics",
+            "percentage": 10.0
+        }, {
+            "category": "Textbooks",
+            "percentage": 25.0
+        }, {
+            "category": "Clothes",
+            "percentage": 25.0
+        }, {
+            "category": "Misc",
+            "percentage": 20.0
+        }],
+        "transactions": [{
+            "date": "10/11/16",
+            "company": "Burger King",
+            "category": "Food",
+            "cost": "100"
+        }, {
+            "date": "11/16/15",
+            "company": "H&M",
+            "category": "Clothing",
+            "cost": "55"
+        }, {
+            "date": "11/01/16",
+            "company": "Amazon",
+            "category": "Electronics",
+            "cost": "299"
+        }, {
+            "date": "10/01/16",
+            "company": "SBU BookStore",
+            "category": "Textbooks",
+            "cost": "88"
+        }, {
+            "date": "08/10/16",
+            "company": "Walmart",
+            "category": "Misc.",
+            "cost": "100"
+        }],
+        "categories": {
+            "electronics": 50,
+            "food": 10000,
+            "transportation": 40
+        }
+    }
+
+}
