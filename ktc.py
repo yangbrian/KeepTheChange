@@ -4,13 +4,6 @@ import logging
 from flask import Flask, render_template, Response, request, jsonify
 app = Flask(__name__)
 
-import requests
-import requests_toolbelt.adapters.appengine
-
-# Use the App Engine Requests adapter. This makes sure that Requests uses
-# URLFetch.
-requests_toolbelt.adapters.appengine.monkeypatch()
-
 # amazon advertising api
 from amazon.api import AmazonAPI
 import amazonkeys
