@@ -33,6 +33,15 @@ def get_transactions(user_id):
     }
     return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
+# GET - get amount of one category
+@app.route("/transactions/<user_id>/<category>", methods=['GET'])
+def get_transactions_category(user_id, category):
+
+    result = firebase.get('/recent_transactions/' + category, None)
+    transactions = {
+        'amount': result
+    }
+    return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 # POST - accept one new transaction for that user
 @app.route("/transactions/<user_id>", methods=['POST'])
@@ -41,6 +50,18 @@ def put_transaction(user_id):
     result = firebase.put(
                 '/recent_transactions/',
                 request.form['category'], # key
+                int(request.form['amount']) # value
+            )
+    return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+# POST - accept one new transaction for that user
+# Same as put_transaction but with category in URL
+@app.route("/transactions/<user_id>/<category>", methods=['POST'])
+def put_transaction_category(user_id, category):
+
+    result = firebase.put(
+                '/recent_transactions/',
+                category, # key
                 int(request.form['amount']) # value
             )
     return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
