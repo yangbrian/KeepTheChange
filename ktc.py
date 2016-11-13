@@ -24,23 +24,34 @@ def index():
     return render_template("index.html")
 
 # GET - return json of all transactions of that user
-# POST - accept json of one new transaction for that user
-@app.route("/transactions/<user_id>", methods=['GET', 'POST'])
+@app.route("/transactions/<user_id>", methods=['GET'])
 def get_transactions(user_id):
 
-    if request.method == 'POST':
-        result = firebase.put(
-                    '/recent_transactions/',
-                    request.form['category'], # key
-                    int(request.form['amount']) # value
-                )
-        return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
-    else:
-        result = firebase.get('/recent_transactions', None)
-        transactions = {
-            'recent_transactions': result
-        }
-        return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
+    result = firebase.get('/recent_transactions', None)
+    transactions = {
+        'recent_transactions': result
+    }
+    return jsonify(**transactions), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+
+# POST - accept one new transaction for that user
+@app.route("/transactions/<user_id>", methods=['POST'])
+def put_transaction(user_id):
+
+    result = firebase.put(
+                '/recent_transactions/',
+                request.form['category'], # key
+                int(request.form['amount']) # value
+            )
+    return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+# DELETE - delete transaction
+@app.route("/transactions/<user_id>/<category>", methods=['DELETE'])
+def delete_transation(user_id, category):
+
+    firebase.delete('/recent_transactions/', category)
+
+    return "{ \"success\" : true }", 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 ## Look up Amazon product info by ASIN
 @app.route('/amazon/<prod_id>')
